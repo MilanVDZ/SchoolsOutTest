@@ -1,6 +1,7 @@
 package model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Person {
@@ -13,6 +14,8 @@ public class Person {
     private Gender gender;
     @ManyToOne
     private Course course;
+    @ManyToMany
+    private List<Course> courseHistory;
 
     public Person() {
     }
@@ -65,6 +68,10 @@ public class Person {
         this.course = course;
     }
 
+    public List<Course> getCourseHistory() {
+        return courseHistory;
+    }
+
     @Override
     public String toString() {
         return "Person{" +
@@ -73,6 +80,7 @@ public class Person {
                 ", familyname='" + familyname + '\'' +
                 ", gender=" + gender +
                 ", course=" + course +
+                ", courseHistory=" + courseHistory +
                 '}';
     }
 }

@@ -1,6 +1,8 @@
 package model;
+
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 public class Exam {
@@ -15,11 +17,15 @@ public class Exam {
     private int total;
     @ManyToOne
     private Module module;
+    @ManyToOne
+    private Exam examGroup;
+    @OneToMany (mappedBy = "examGroup",cascade = CascadeType.REMOVE)
+    private List<Exam> subExams;
 
     public Exam() {
     }
 
-    public Exam(Long id, String name, String description, LocalDate date, int weight, int total, Module module) {
+    public Exam(Long id, String name, String description, LocalDate date, int weight, int total, Module module, Exam examGroup) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -27,6 +33,7 @@ public class Exam {
         this.weight = weight;
         this.total = total;
         this.module = module;
+        this.examGroup = examGroup;
     }
 
     public Long getId() {
@@ -85,6 +92,18 @@ public class Exam {
         this.module = module;
     }
 
+    public Exam getExamGroup() {
+        return examGroup;
+    }
+
+    public void setExamGroup(Exam examGroup) {
+        this.examGroup = examGroup;
+    }
+
+    public List<Exam> getSubExams() {
+        return subExams;
+    }
+
     @Override
     public String toString() {
         return "Exam{" +
@@ -95,6 +114,8 @@ public class Exam {
                 ", weight=" + weight +
                 ", total=" + total +
                 ", module=" + module +
+                ", examGroup=" + examGroup +
+                ", subExams=" + subExams +
                 '}';
     }
 }
